@@ -1,4 +1,28 @@
 #!/bin/bash
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --port)
+            PORT="$2"
+            shift 2
+            ;;
+        --username)
+            USERNAME="$2"
+            shift 2
+            ;;
+        --password)
+            PASSWORD="$2"
+            shift 2
+            ;;
+        --webBasePath)
+            WEB_BASE_PATH="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -148,21 +172,13 @@ config_after_install() {
 
     if [[ ${#existing_webBasePath} -lt 4 ]]; then
         if [[ "$existing_username" == "admin" && "$existing_password" == "admin" ]]; then
-            local config_webBasePath=$(gen_random_string 15)
-            local config_username=$(gen_random_string 10)
-            local config_password=$(gen_random_string 10)
-
-            read -p "Would you like to customize the Panel Port settings? (If not, a random port will be applied) [y/n]: " config_confirm
-            if [[ "${config_confirm}" == "y" || "${config_confirm}" == "Y" ]]; then
-                read -p "Please set up the panel port: " config_port
-                echo -e "${yellow}Your Panel Port is: ${config_port}${plain}"
-            else
-                local config_port=$(shuf -i 1024-62000 -n 1)
-                echo -e "${yellow}Generated random port: ${config_port}${plain}"
-            fi
+            local config_webBasePath="${WEB_BASE_PATH:-$(gen_random_string 15)}"
+            local config_username="${USERNAME:-$(gen_random_string 10)}"
+            local config_password="${PASSWORD:-$(gen_random_string 10)}"
+            local config_port="${PORT:-$(shuf -i 1024-62000 -n 1)}"
 
             /usr/local/x-ui/x-ui setting -username "${config_username}" -password "${config_password}" -port "${config_port}" -webBasePath "${config_webBasePath}"
-            echo -e "This is a fresh installation, generating random login info for security concerns:"
+            echo -e "This is a fresh installation, using provided or generated login info:"
             echo -e "###############################################"
             echo -e "${green}Username: ${config_username}${plain}"
             echo -e "${green}Password: ${config_password}${plain}"
@@ -172,16 +188,16 @@ config_after_install() {
             echo -e "###############################################"
             echo -e "${yellow}If you forgot your login info, you can type 'x-ui settings' to check${plain}"
         else
-            local config_webBasePath=$(gen_random_string 15)
-            echo -e "${yellow}WebBasePath is missing or too short. Generating a new one...${plain}"
+            local config_webBasePath="${WEB_BASE_PATH:-$(gen_random_string 15)}"
+            echo -e "${yellow}WebBasePath is missing or too short. Using provided or generating a new one...${plain}"
             /usr/local/x-ui/x-ui setting -webBasePath "${config_webBasePath}"
             echo -e "${green}New WebBasePath: ${config_webBasePath}${plain}"
             echo -e "${green}Access URL: http://${server_ip}:${existing_port}/${config_webBasePath}${plain}"
         fi
     else
         if [[ "$existing_username" == "admin" && "$existing_password" == "admin" ]]; then
-            local config_username=$(gen_random_string 10)
-            local config_password=$(gen_random_string 10)
+            local config_username="${USERNAME:-$(gen_random_string 10)}"
+            local config_password="${PASSWORD:-$(gen_random_string 10)}"
 
             echo -e "${yellow}Default credentials detected. Security update required...${plain}"
             /usr/local/x-ui/x-ui setting -username "${config_username}" -password "${config_password}"
