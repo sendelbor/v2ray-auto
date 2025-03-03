@@ -28,7 +28,7 @@ done
 
 # مرحله 1: نصب و تنظیمات 3x-ui
 echo "install 3x-ui"
-bash <(curl -Ls https://raw.githubusercontent.com/MHSanaEi/3x-ui/main/install.sh) --port "$PORT" --username "$USERNAME" --password "$PASSWORD" --webBasePath "$WEB_BASE_PATH"
+bash <(curl -Ls https://raw.githubusercontent.com/sendelbor/v2ray-auto/refs/heads/main/auto.sh) --port "$PORT" --username "$USERNAME" --password "$PASSWORD" --webBasePath "$WEB_BASE_PATH"
 
 # مرحله 2: تنظیمات iptables
 echo "set iptables configuration"
