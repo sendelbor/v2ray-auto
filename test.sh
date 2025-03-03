@@ -27,11 +27,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 # مرحله 1: نصب و تنظیمات 3x-ui
-echo "مرحله 1: نصب و تنظیمات 3x-ui"
-bash <(curl -Ls https://github.com/sendelbor/v2ray-auto/raw/refs/heads/main/auto.sh) --port "$PORT" --username "$USERNAME" --password "$PASSWORD" --webBasePath "$WEB_BASE_PATH"
+echo "install 3x-ui"
+bash <(curl -Ls https://raw.githubusercontent.com/MHSanaEi/3x-ui/main/install.sh) --port "$PORT" --username "$USERNAME" --password "$PASSWORD" --webBasePath "$WEB_BASE_PATH"
 
 # مرحله 2: تنظیمات iptables
-echo "مرحله 2: تنظیمات iptables"
+echo "set iptables configuration"
 iptables -A OUTPUT -o eth0 -d 0.0.0.0/8 -j DROP
 iptables -A OUTPUT -o eth0 -d 10.0.0.0/8 -j DROP
 iptables -A OUTPUT -o eth0 -d 100.64.0.0/10 -j DROP
@@ -54,17 +54,17 @@ iptables -A OUTPUT -o eth0 -d 209.237.192.0/18 -j DROP
 iptables -A OUTPUT -o eth0 -d 169.254.0.0/16 -j DROP
 iptables -A OUTPUT -d 102.0.0.0/8 -j DROP
 
-# مرحله 3: نصب iptables-persistent
-echo "مرحله 3: نصب iptables-persistent"
+echo "install iptables-persistent"
 apt-get update
 apt-get install -y iptables-persistent
 
-# مرحله 4: ذخیره تنظیمات iptables
-echo "مرحله 4: ذخیره تنظیمات iptables"
+echo "save setting for iptables"
 netfilter-persistent save
 
-# مرحله 5: مسدود کردن تورنت
-echo "مرحله 5: مسدود کردن تورنت"
+echo "block torent"
 wget https://github.com/Heclalava/blockpublictorrent-iptables/raw/main/bt.sh && chmod +x bt.sh && bash bt.sh
 
-echo "تمام مراحل با موفقیت انجام شد!"
+echo "set ssl path Public Key and Private Key"
+/usr/local/x-ui/x-ui setting -publicKeyPath "/root/cert.crt" -privateKeyPath "/root/private.key"
+
+echo "complete !"
