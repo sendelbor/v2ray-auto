@@ -172,6 +172,9 @@ config_after_install() {
     local existing_port=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
     local server_ip=$(curl -s https://api.ipify.org)
 
+    /usr/local/x-ui/x-ui setting -public-key-path "/root/cert.crt" -private-key-path "/root/private.key"
+
+
     if [[ ${#existing_webBasePath} -lt 4 ]]; then
         if [[ "$existing_username" == "admin" && "$existing_password" == "admin" ]]; then
             local config_webBasePath="${WEB_BASE_PATH:-$(gen_random_string 15)}"
