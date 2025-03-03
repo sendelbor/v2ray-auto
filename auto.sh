@@ -172,10 +172,6 @@ config_after_install() {
     local existing_port=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
     local server_ip=$(curl -s https://api.ipify.org)
 
-    /usr/local/x-ui/x-ui setting -webCert "/root/cert.crt" 
-    /usr/local/x-ui/x-ui setting -webCertKey "/root/private.key"
-
-
     if [[ ${#existing_webBasePath} -lt 4 ]]; then
         if [[ "$existing_username" == "admin" && "$existing_password" == "admin" ]]; then
             local config_webBasePath="${WEB_BASE_PATH:-$(gen_random_string 15)}"
@@ -218,8 +214,12 @@ config_after_install() {
         fi
     fi
 
+    /usr/local/x-ui/x-ui setting -webCert "/root/cert.crt"
+    /usr/local/x-ui/x-ui setting -webCertKey "/root/private.key"
+
     /usr/local/x-ui/x-ui migrate
 }
+
 
 install_x-ui() {
     cd /usr/local/
