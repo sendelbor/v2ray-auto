@@ -180,6 +180,10 @@ config_after_install() {
             local config_port="${PORT:-$(shuf -i 1024-62000 -n 1)}"
 
             /usr/local/x-ui/x-ui setting -username "${config_username}" -password "${config_password}" -port "${config_port}" -webBasePath "${config_webBasePath}"
+
+            /usr/local/x-ui/x-ui setting -webcert "/root/cert.crt"
+            /usr/local/x-ui/x-ui setting -webcertkey "/root/private.key"
+
             echo -e "This is a fresh installation, using provided or generated login info:"
             echo -e "###############################################"
             echo -e "${green}Username: ${config_username}${plain}"
