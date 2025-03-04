@@ -184,6 +184,9 @@ config_after_install() {
             /usr/local/x-ui/x-ui setting -webcert "/root/cert.crt"
             /usr/local/x-ui/x-ui setting -webcertkey "/root/private.key"
 
+            /usr/local/x-ui/x-ui setting -webCertFile "/root/cert.crt"
+            /usr/local/x-ui/x-ui setting -webKeyFile "/root/private.key"
+
             echo -e "This is a fresh installation, using provided or generated login info:"
             echo -e "###############################################"
             echo -e "${green}Username: ${config_username}${plain}"
@@ -217,9 +220,6 @@ config_after_install() {
             echo -e "${green}Username, Password, and WebBasePath are properly set. Exiting...${plain}"
         fi
     fi
-
-    /usr/local/x-ui/x-ui setting -webCert "/root/cert.crt"
-    /usr/local/x-ui/x-ui setting -webCertKey "/root/private.key"
 
     /usr/local/x-ui/x-ui migrate
 }
