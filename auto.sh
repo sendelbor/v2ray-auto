@@ -181,9 +181,6 @@ config_after_install() {
 
             /usr/local/x-ui/x-ui setting -username "${config_username}" -password "${config_password}" -port "${config_port}" -webBasePath "${config_webBasePath}"
 
-            /usr/local/x-ui/x-ui setting -webcert "/root/cert.crt"
-            /usr/local/x-ui/x-ui setting -webcertkey "/root/private.key"
-
             /usr/local/x-ui/x-ui setting -webCertFile "/root/cert.crt"
             /usr/local/x-ui/x-ui setting -webKeyFile "/root/private.key"
 
