@@ -34,7 +34,7 @@ netfilter-persistent save
 echo "block torent"
 wget https://github.com/Heclalava/blockpublictorrent-iptables/raw/main/bt.sh && chmod +x bt.sh && bash bt.sh
 
-echo "set ssl path Public Key and Private Key"
-/usr/local/x-ui/x-ui setting -webCert "/root/cert.crt" -webCertKey "/root/private.key"
+# echo "set ssl path Public Key and Private Key"
+# /usr/local/x-ui/x-ui setting -webCert "/root/cert.crt" -webCertKey "/root/private.key"
 
 echo "complete !"
