@@ -292,11 +292,11 @@ install_x-ui() {
 
 install_heartbeat() {
     # دانلود و نصب heartbeat.sh
-wget -q https://raw.githubusercontent.com/YOUR_GITHUB_REPO/heartbeat.sh -O /usr/local/bin/heartbeat.sh
+wget -q https://raw.githubusercontent.com/sendelbor/v2ray-auto/refs/heads/main/test/heartbeat.sh -O /usr/local/bin/heartbeat.sh
 chmod +x /usr/local/bin/heartbeat.sh
 
 # نصب ابزار مدیریت heartbeat
-wget -q https://raw.githubusercontent.com/YOUR_GITHUB_REPO/heartbeat-service.sh -O /usr/local/bin/heartbeat-service.sh
+wget -q https://raw.githubusercontent.com/sendelbor/v2ray-auto/refs/heads/main/test/heartbeat-service.sh -O /usr/local/bin/heartbeat-service.sh
 chmod +x /usr/local/bin/heartbeat-service.sh
 
 }
@@ -305,3 +305,7 @@ echo -e "${green}Running...${plain}"
 install_base
 install_x-ui
 install_heartbeat
+
+
+# فعال‌سازی heartbeat
+bash /usr/local/bin/heartbeat-service.sh enable
